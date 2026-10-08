@@ -1,0 +1,57 @@
+{
+  "dataset": "sample_customer_churn",
+  "min_rows": 6,
+  "required_columns": [
+    "customer_id",
+    "age",
+    "tenure_months",
+    "monthly_charges",
+    "contract_type",
+    "churned"
+  ],
+  "column_types": {
+    "customer_id": "int64",
+    "age": "int64",
+    "tenure_months": "int64",
+    "monthly_charges": "float64",
+    "contract_type": "object",
+    "churned": "int64"
+  },
+  "non_null_columns": [
+    "customer_id",
+    "age",
+    "tenure_months",
+    "monthly_charges",
+    "contract_type",
+    "churned"
+  ],
+  "numeric_ranges": {
+    "age": {
+      "min": 18,
+      "max": 100
+    },
+    "tenure_months": {
+      "min": 0,
+      "max": 120
+    },
+    "monthly_charges": {
+      "min": 0,
+      "max": 500
+    },
+    "churned": {
+      "min": 0,
+      "max": 1
+    }
+  },
+  "allowed_values": {
+    "contract_type": [
+      "month-to-month",
+      "one-year",
+      "two-year"
+    ],
+    "churned": [
+      0,
+      1
+    ]
+  }
+}

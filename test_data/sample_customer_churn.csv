@@ -1,0 +1,7 @@
+customer_id,age,tenure_months,monthly_charges,contract_type,churned
+1001,29,12,72.50,month-to-month,0
+1002,41,36,89.95,one-year,0
+1003,65,4,104.20,month-to-month,1
+1004,52,72,68.10,two-year,2
+1005,13,2,55.00,month-to-month,1
+1006,137,18,76.45,one-year,0
