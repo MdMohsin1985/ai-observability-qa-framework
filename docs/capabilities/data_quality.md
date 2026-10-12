@@ -10,7 +10,7 @@ The Data Quality testing pipeline evaluates datasets across 5 programmatic stage
 
 ![Data Quality Validation Flowchart](../images/data_quality_flowchart.png)
 
-1. **Inputs:** Raw tabular CSV data from [`test_data/sample_customer_churn.csv`](../../test_data/sample_customer_churn.csv).
+1. **Inputs:** Clean benchmark data ([`test_data/sample_customer_churn.csv`](../../test_data/sample_customer_churn.csv)) and defect fixture ([`test_data/sample_customer_churn_dirty.csv`](../../test_data/sample_customer_churn_dirty.csv)).
 2. **Rules:** Expectation definitions from [`config/data_quality_rules.json`](../../config/data_quality_rules.json).
 3. **Logic:** Pure validation functions in [`src/ai_observability_qa/data_quality/validators.py`](../../src/ai_observability_qa/data_quality/validators.py).
 4. **Tests:** Automated test suite in [`tests/test_data_quality.py`](../../tests/test_data_quality.py).

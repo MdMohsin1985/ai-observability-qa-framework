@@ -16,6 +16,7 @@ from ai_observability_qa.data_quality import (
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DATASET_PATH = PROJECT_ROOT / "test_data" / "sample_customer_churn.csv"
+DIRTY_DATASET_PATH = PROJECT_ROOT / "test_data" / "sample_customer_churn_dirty.csv"
 RULES_PATH = PROJECT_ROOT / "config" / "data_quality_rules.json"
 
 
@@ -35,6 +36,7 @@ def format_data_quality_failures(results) -> str:
 
 
 def test_sample_dataset_passes_configured_data_quality_rules():
+    """Verify clean benchmark dataset satisfies all configured data quality expectations."""
     dataframe = pd.read_csv(DATASET_PATH)
     rules = load_rules()
 
@@ -50,6 +52,24 @@ def test_sample_dataset_passes_configured_data_quality_rules():
     failed_results = [result for result in results if not result.passed]
     if failed_results:
         pytest.fail(format_data_quality_failures(failed_results), pytrace=False)
+
+
+def test_dirty_dataset_fails_configured_data_quality_rules():
+    """Verify that intentional schema and range defects are actively caught and reported."""
+    dataframe = pd.read_csv(DIRTY_DATASET_PATH)
+    rules = load_rules()
+
+    results = [
+        validate_numeric_ranges(dataframe, rules["numeric_ranges"]),
+        validate_allowed_values(dataframe, rules["allowed_values"]),
+    ]
+
+    failed_results = [result for result in results if not result.passed]
+    assert len(failed_results) == 2, "Expected range and allowed value checks to flag dirty data"
+
+    failed_checks = {r.check_name for r in failed_results}
+    assert "numeric_ranges" in failed_checks
+    assert "allowed_values" in failed_checks
 
 
 def test_required_column_validation_reports_missing_columns():
