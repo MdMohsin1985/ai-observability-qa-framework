@@ -12,7 +12,7 @@ Each capability in the framework is self-contained with its own rules, evaluatio
 | :--- | :---: | :--- | :--- |
 | **Data Quality Testing** | Complete | [Data Quality Guide](docs/capabilities/data_quality.md) | Schema validation, pandas dtypes, null constraints, numeric ranges, category checks |
 | **ML Model Performance Testing** | Complete | [Model Performance Guide](docs/capabilities/model_performance.md) | Classification metrics (Accuracy, F1, ROC-AUC), FPR/FNR bounds, subgroup slices, regression gates |
-| **Data Drift Detection** | Next Up | *Planned (Session 5)* | KS-test, Population Stability Index (PSI), Chi-Square test for feature shift |
+| **Data Drift Detection** | Next Up | *Planned* | KS-test, Population Stability Index (PSI), Chi-Square test for feature shift |
 | **Model Drift & Degradation** | Planned | *Planned* | Tracking prediction drift and ground-truth concept decay over time |
 | **AI Observability (Logs, Metrics, Traces)** | Planned | *Planned* | OpenTelemetry instrumentation, inference latency, token tracing |
 | **Monitoring & Alert Validation** | Planned | *Planned* | Threshold triggers, alert rule verification, synthetic degradation alarms |
@@ -48,10 +48,10 @@ ai-observability-qa-framework/
 ├── src/
 │   └── ai_observability_qa/
 │       ├── __init__.py
-│       ├── data_quality/                   # Session 3: Data Quality
+│       ├── data_quality/                   # Data Quality Validation
 │       │   ├── __init__.py
 │       │   └── validators.py
-│       ├── model_performance/              # Session 4: Model Performance
+│       ├── model_performance/              # ML Model Performance Testing
 │       │   ├── __init__.py
 │       │   ├── metrics.py
 │       │   └── validators.py

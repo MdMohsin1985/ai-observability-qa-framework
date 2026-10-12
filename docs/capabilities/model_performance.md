@@ -1,4 +1,4 @@
-# Session 4: ML Model Performance Testing
+# ML Model Performance Testing
 
 A production-style QA validation module for evaluating machine learning model predictions, ensuring classification accuracy, operational error compliance, fairness across subgroup slices, and automated regression detection.
 

@@ -1,4 +1,4 @@
-# Session 3: Data Quality Testing
+# Data Quality Testing
 
 A modular validation suite for tabular datasets in AI/ML systems, verifying schema integrity, null constraints, numeric bounds, and category sets before training or inference.
 
