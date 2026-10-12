@@ -1,0 +1,38 @@
+{
+  "model_name": "customer_churn_classifier",
+  "task_type": "binary_classification",
+  "min_sample_size": 30,
+  "thresholds": {
+    "accuracy": {
+      "min": 0.80
+    },
+    "precision": {
+      "min": 0.75
+    },
+    "recall": {
+      "min": 0.75
+    },
+    "f1_score": {
+      "min": 0.75
+    },
+    "roc_auc": {
+      "min": 0.80
+    }
+  },
+  "error_rate_limits": {
+    "max_false_positive_rate": 0.25,
+    "max_false_negative_rate": 0.25
+  },
+  "slice_evaluations": {
+    "slice_column": "contract_type",
+    "min_slice_samples": 8,
+    "thresholds": {
+      "f1_score": {
+        "min": 0.65
+      },
+      "accuracy": {
+        "min": 0.70
+      }
+    }
+  }
+}
