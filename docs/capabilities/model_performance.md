@@ -56,11 +56,28 @@ The Model Performance testing pipeline processes predictions across 5 programmat
 
 ---
 
-## Evaluation Logic
+## Evaluation Logic & Metric Formulas
 
 ### 1. Classification Metrics Engine (`metrics.py`)
-- `calculate_classification_metrics(y_true, y_pred, y_prob)`: Computes Accuracy, Precision, Recall, F1 Score, Specificity, False Positive Rate (FPR), False Negative Rate (FNR), True/False Positives/Negatives, and ROC-AUC.
+- `calculate_classification_metrics(y_true, y_pred, y_prob)`: Computes Accuracy, Precision, Recall, F1 Score, Specificity, False Positive Rate (FPR), False Negative Rate (FNR), and ROC-AUC.
 - `calculate_sliced_metrics(dataframe, slice_column, ...)`: Evaluates performance across customer segments (e.g. `contract_type`) to uncover hidden subgroup degradation.
+
+### Mathematical Metric Definitions
+
+#### Accuracy
+$$\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{TN} + \text{FP} + \text{FN}}$$
+
+#### Precision (Positive Predictive Value)
+$$\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}$$
+
+#### Recall (Sensitivity / True Positive Rate)
+$$\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}$$
+
+#### F1 Score
+$$\text{F1 Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} = \frac{2\text{TP}}{2\text{TP} + \text{FP} + \text{FN}}$$
+
+#### ROC-AUC (Area Under the Receiver Operating Characteristic Curve)
+$$\text{ROC-AUC} = \int_{0}^{1} \text{TPR}(\tau) \, d(\text{FPR}(\tau)) = P\left(\hat{p}_{\text{positive}} > \hat{p}_{\text{negative}}\right)$$
 
 ### 2. QA Gate Validators (`validators.py`)
 - `validate_global_performance(metrics, threshold_rules)`: Verifies aggregate metrics against configured production minimums.
