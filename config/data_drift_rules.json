@@ -1,0 +1,25 @@
+{
+  "dataset_name": "customer_churn_drift_evaluation",
+  "max_drifted_features_ratio": 0.33,
+  "numerical_features": {
+    "age": {
+      "method": "ks_test",
+      "threshold": 0.05
+    },
+    "tenure_months": {
+      "method": "psi",
+      "threshold": 0.20
+    },
+    "monthly_charges": {
+      "method": "ks_test",
+      "threshold": 0.05
+    }
+  },
+  "categorical_features": {
+    "contract_type": {
+      "method": "chi_square",
+      "threshold": 0.05
+    }
+  }
+}
+

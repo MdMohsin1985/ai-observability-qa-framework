@@ -12,8 +12,8 @@ Each capability in the framework is self-contained with its own rules, evaluatio
 | :--- | :---: | :--- | :--- |
 | **Data Quality Testing** | Complete | [Data Quality Guide](docs/capabilities/data_quality.md) | Schema validation, pandas dtypes, null constraints, numeric ranges, category checks |
 | **ML Model Performance Testing** | Complete | [Model Performance Guide](docs/capabilities/model_performance.md) | Classification metrics (Accuracy, F1, ROC-AUC), FPR/FNR bounds, subgroup slices, regression gates |
-| **Data Drift Detection** | Next Up | *Planned* | KS-test, Population Stability Index (PSI), Chi-Square test for feature shift |
-| **Model Drift & Degradation** | Planned | *Planned* | Tracking prediction drift and ground-truth concept decay over time |
+| **Data Drift Detection** | Complete | [Data Drift Guide](docs/capabilities/data_drift.md) | KS-test, Population Stability Index (PSI), Chi-Square test for feature shift |
+| **Model Drift & Degradation** | Next Up | *Planned* | Tracking prediction drift and ground-truth concept decay over time |
 | **AI Observability (Logs, Metrics, Traces)** | Planned | *Planned* | OpenTelemetry instrumentation, inference latency, token tracing |
 | **Monitoring & Alert Validation** | Planned | *Planned* | Threshold triggers, alert rule verification, synthetic degradation alarms |
 | **LLM Observability & Evaluation** | Planned | *Planned* | Prompt injection, hallucination checks, RAG evaluation, token cost tracking |
@@ -31,13 +31,16 @@ Each capability in the framework is self-contained with its own rules, evaluatio
 ```text
 ai-observability-qa-framework/
 ├── config/                                 # JSON rule configurations
+│   ├── data_drift_rules.json
 │   ├── data_quality_rules.json
 │   └── model_performance_rules.json
 ├── docs/                                   # Capability-specific documentation & assets
 │   ├── capabilities/
+│   │   ├── data_drift.md
 │   │   ├── data_quality.md
 │   │   └── model_performance.md
 │   └── images/
+│       ├── data_drift_flowchart.png
 │       ├── data_quality_flowchart.png
 │       └── model_performance_flowchart.png
 ├── reports/                                # Generated QA outputs
@@ -51,6 +54,10 @@ ai-observability-qa-framework/
 │       ├── data_quality/                   # Data Quality Validation
 │       │   ├── __init__.py
 │       │   └── validators.py
+│       ├── drift/                          # Data Drift Detection
+│       │   ├── __init__.py
+│       │   ├── detectors.py
+│       │   └── validators.py
 │       ├── model_performance/              # ML Model Performance Testing
 │       │   ├── __init__.py
 │       │   ├── metrics.py
@@ -59,11 +66,15 @@ ai-observability-qa-framework/
 │           ├── __init__.py
 │           └── generator.py
 ├── test_data/                              # Benchmark & test datasets
+│   ├── baseline_churn_reference.csv
+│   ├── production_churn_current_stable.csv
+│   ├── production_churn_current_drifted.csv
 │   ├── sample_customer_churn.csv
 │   ├── sample_customer_churn_dirty.csv
 │   ├── churn_model_predictions.csv
 │   └── churn_model_predictions_degraded.csv
 ├── tests/                                  # Pytest automated test suites
+│   ├── test_data_drift.py
 │   ├── test_data_quality.py
 │   └── test_model_performance.py
 ├── pytest.ini
@@ -89,18 +100,20 @@ pip install -r requirements.txt
 ### 2. Running Automated Tests
 
 ```bash
-# Run the entire test suite
+# Run the entire test suite (all capabilities)
 pytest
 
 # Run a specific capability suite
 pytest tests/test_data_quality.py
 pytest tests/test_model_performance.py
+pytest tests/test_data_drift.py
 
 # Generate HTML test report
 pytest tests/test_model_performance.py --html=reports/model_performance_pytest_report.html --self-contained-html
 
 # Generate JUnit XML test report
-python -m pytest tests/test_model_performance.py --junitxml=reports/model-performance-results.xml
+python -m pytest tests/test_data_drift.py --junitxml=reports/data-drift-results.xml
+python -m pytest tests/test_data_drift.py --html=reports/data_drift_pytest_report.html --self-contained-html
 ```
 
 ---
@@ -111,3 +124,4 @@ For in-depth explanations of inputs, rules, logic engines, flowcharts, and test 
 
 - **[Data Quality Testing Guide](docs/capabilities/data_quality.md)** — Schema, dtypes, nulls, ranges, and allowed categories.
 - **[Model Performance Testing Guide](docs/capabilities/model_performance.md)** — Metrics, subgroup slices, error bounds, and regression gates.
+- **[Data Drift Detection Guide](docs/capabilities/data_drift.md)** — Kolmogorov-Smirnov test, Population Stability Index (PSI), and Chi-Square contingency checks.
